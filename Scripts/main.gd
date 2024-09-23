@@ -8,9 +8,53 @@ var colorStepSpeed = 0.1;
 var runs : Array[Run]
 var runLabels : Array[Label]
 
+var defaultSave = {
+	"level_name": "",
+	"runs": [
+		{
+			"start": null,
+			"end": null
+		}
+	]
+}
+
+var data = {}
+
+func save_game(dict):
+	var saveGame = FileAccess.open("user://gdptsave.json", FileAccess.WRITE)
+	var json_string = JSON.stringify(dict)
+	saveGame.store_line(json_string)
+	saveGame.close()
+
+func load_game():
+	if not FileAccess.file_exists("user://gdptsave.json"): #User hasn't played the game before
+		return defaultSave
+	var saveGame = FileAccess.open("user://gdptsave.json", FileAccess.READ)
+	while saveGame.get_position() < saveGame.get_length(): # User has played the game before
+		var json_string = saveGame.get_line()
+		var json = JSON.new()
+		var _parse_result = json.parse(json_string)
+		var node_data = json.get_data()
+		saveGame.close()
+		return node_data
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$Info/Window/Panel/ScrollContainer/VBoxContainer/VersionLabel.text = "   " + ProjectSettings.get_setting("application/config/version")
+	
+	data = load_game()
+	##save_game(defaultSave)
+	
+	$Panel/ScrollContainer/MarginContainer/VBoxContainer/LineEdit.text = data.level_name
+	
+	for i in data.runs:
+		var run = Run.new()
+		if i.start != null && i.end != null:
+			run.start = i.start
+			run.end = i.end
+			runs.append(run)
+		print(i)
 	
 	refresh_runs()
 
@@ -62,6 +106,20 @@ func refresh_runs():
 		
 		if(runs[i].start == 0):
 			$Panel/ScrollContainer/MarginContainer/VBoxContainer/ProgressBar.value = runs[i].end
+	
+	data.level_name = $Panel/ScrollContainer/MarginContainer/VBoxContainer/LineEdit.text
+	
+	for i in runs:
+		data.runs.remove_at(0)
+	
+	for i in runs:
+		data.runs.append({"start": null, "end": null})
+	
+	for i in range(runs.size()):
+		data.runs[i].start = runs[i].start
+		data.runs[i].end = runs[i].end
+	
+	save_game(data)
 
 class Run:
 	var start : float
