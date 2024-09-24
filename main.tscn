@@ -1,6 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://cy5nqmqmv3lt3"]
 
 [ext_resource type="Script" path="res://Scripts/main.gd" id="1_r1bpx"]
+[ext_resource type="Gradient" uid="uid://od6kk4c7uqf8" path="res://Resources/bgGradient.tres" id="2_kg0la"]
 [ext_resource type="Texture2D" uid="uid://d2iksyg0qwceg" path="res://Sprites/icon.png" id="2_s6j33"]
 [ext_resource type="Script" path="res://Scripts/window.gd" id="3_fqehp"]
 
@@ -9,10 +10,6 @@ bg_color = Color(0.0338533, 0.0338533, 0.0338533, 0.866667)
 
 [sub_resource type="Theme" id="Theme_tmhuc"]
 Panel/styles/panel = SubResource("StyleBoxFlat_315oc")
-
-[sub_resource type="Gradient" id="Gradient_eoo8c"]
-offsets = PackedFloat32Array(0, 0.25, 0.5, 0.75, 1)
-colors = PackedColorArray(0.2, 0.1, 0.1, 1, 0.1, 0.2, 0.133333, 1, 0.1, 0.1, 0.2, 1, 0.1, 0.2, 0.133333, 1, 0.2, 0.1, 0.1, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wb0tg"]
 bg_color = Color(0.165656, 0.165656, 0.165656, 0.968627)
@@ -36,7 +33,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = SubResource("Theme_tmhuc")
 script = ExtResource("1_r1bpx")
-gradient = SubResource("Gradient_eoo8c")
+gradient = ExtResource("2_kg0la")
 
 [node name="Info" type="Button" parent="."]
 layout_mode = 1
@@ -213,6 +210,7 @@ horizontal_alignment = 1
 
 [node name="AllRuns" type="VBoxContainer" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_constants/separation = 12
 
 [node name="AddRunWindow" type="Window" parent="."]
 title = "Add Run"

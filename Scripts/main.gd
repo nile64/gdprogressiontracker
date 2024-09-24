@@ -91,6 +91,17 @@ func _add_run():
 	
 	$AddRunWindow.hide()
 
+func _remove_run(start : float, end : float):
+	for i in range(runs.size()):
+		if runs[i].start == start && runs[i].end == end:
+			print("correct run found, deleting")
+			runs.remove_at(i)
+			break
+		else:
+			print("incorrect run")
+	
+	refresh_runs()
+
 func refresh_runs():
 	for i in range(runLabels.size()):
 		var label = runLabels[0]
@@ -98,9 +109,22 @@ func refresh_runs():
 		label.queue_free()
 	
 	for i in range(runs.size()):
+		var currRun = Run.new()
+		currRun.start = runs[i].start
+		currRun.end = runs[i].end
+		
 		var label = Label.new()
 		label.name = "RunLabel"
 		label.text = str(runs[i].start) + "-" + str(runs[i].end)
+		
+		var btn = Button.new()
+		btn.name = "RunDelete"
+		btn.text = "Remove Run"
+		label.add_child(btn)
+		btn.set_anchors_preset(Control.PRESET_TOP_RIGHT)
+		btn.set_anchor_and_offset(SIDE_LEFT, 0, 914)
+		btn.button_down.connect(_remove_run.bind(currRun.start, currRun.end))
+		
 		$Panel/ScrollContainer/MarginContainer/VBoxContainer/AllRuns.add_child(label)
 		runLabels.append(label)
 		
