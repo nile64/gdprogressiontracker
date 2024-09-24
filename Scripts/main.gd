@@ -20,6 +20,14 @@ var defaultSave = {
 
 var data = {}
 
+func check_for_update():
+	$HTTPRequest.request_completed.connect(_on_request_completed)
+	$HTTPRequest.request("https://api.github.com/repos/godotengine/godot/releases/latest")
+
+func _on_request_completed(result, response_code, headers, body):
+	var json = JSON.parse_string(body.get_string_from_utf8())
+	print(json)
+
 func save_game(dict):
 	var saveGame = FileAccess.open("user://gdptsave.json", FileAccess.WRITE)
 	var json_string = JSON.stringify(dict)
@@ -43,6 +51,8 @@ func load_game():
 func _ready():
 	$Info/Window/Panel/ScrollContainer/VBoxContainer/VersionLabel.text = "   " + ProjectSettings.get_setting("application/config/version")
 	
+	check_for_update()
+
 	data = load_game()
 	##save_game(defaultSave)
 	
