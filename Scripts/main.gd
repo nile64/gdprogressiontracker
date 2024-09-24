@@ -22,7 +22,7 @@ var data = {}
 
 func check_for_update():
 	$HTTPRequest.request_completed.connect(_on_request_completed)
-	$HTTPRequest.request("https://api.github.com/repos/godotengine/godot/releases/latest")
+	$HTTPRequest.request("https://api.github.com/repos/nile64/gdprogressiontracker/releases/latest")
 
 func _on_request_completed(result, response_code, headers, body):
 	var json = JSON.parse_string(body.get_string_from_utf8())
@@ -52,7 +52,7 @@ func _ready():
 	$Info/Window/Panel/ScrollContainer/VBoxContainer/VersionLabel.text = "   " + ProjectSettings.get_setting("application/config/version")
 	
 	check_for_update()
-
+	
 	data = load_game()
 	##save_game(defaultSave)
 	

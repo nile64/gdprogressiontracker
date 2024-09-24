@@ -275,6 +275,8 @@ placeholder_text = "XX"
 layout_mode = 2
 text = "Add"
 
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+
 [connection signal="button_down" from="Info" to="." method="_open_credits_window"]
 [connection signal="close_requested" from="Info/Window" to="Info/Window" method="on_close_requested"]
 [connection signal="button_down" from="Panel/ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer/Button" to="." method="_open_addrun_window"]
