@@ -277,6 +277,40 @@ text = "Add"
 
 [node name="HTTPRequest" type="HTTPRequest" parent="."]
 
+[node name="LinkButton" type="LinkButton" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -316.0
+offset_bottom = 40.0
+grow_horizontal = 0
+text = "Version out of date. Click here to update."
+underline = 1
+uri = "https://github.com/nile64/gdprogressiontracker/releases"
+
+[node name="latest" type="Label" parent="LinkButton"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -107.0
+offset_top = 23.0
+offset_bottom = 46.0
+grow_horizontal = 0
+text = "(Latest: VX.X.X)"
+
+[node name="Label" type="Label" parent="LinkButton"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -107.0
+offset_top = 46.0
+offset_bottom = 69.0
+grow_horizontal = 0
+text = "(Current: VX.X.X)"
+
 [connection signal="button_down" from="Info" to="." method="_open_credits_window"]
 [connection signal="close_requested" from="Info/Window" to="Info/Window" method="on_close_requested"]
 [connection signal="button_down" from="Panel/ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer/Button" to="." method="_open_addrun_window"]

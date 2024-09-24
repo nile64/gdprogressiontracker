@@ -26,7 +26,14 @@ func check_for_update():
 
 func _on_request_completed(result, response_code, headers, body):
 	var json = JSON.parse_string(body.get_string_from_utf8())
-	print(json)
+	if(!json.has("name")):
+		return
+	
+	print(json["name"])
+	if json["name"] != ProjectSettings.get_setting("application/config/version"):
+		$LinkButton.show()
+		$LinkButton/latest.text = "(Latest: " + json["name"] + ")"
+		$LinkButton/Label.text = "(Installed: " + ProjectSettings.get_setting("application/config/version") + ")"
 
 func save_game(dict):
 	var saveGame = FileAccess.open("user://gdptsave.json", FileAccess.WRITE)
@@ -50,6 +57,7 @@ func load_game():
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$Info/Window/Panel/ScrollContainer/VBoxContainer/VersionLabel.text = "   " + ProjectSettings.get_setting("application/config/version")
+	$LinkButton.hide()
 	
 	check_for_update()
 	
