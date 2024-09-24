@@ -111,6 +111,8 @@ func _add_run():
 
 func _remove_run(start : float, end : float):
 	for i in range(runs.size()):
+		print(str(start) + "-" + str(end))
+		print(str(runs[i].start) + "-" + str(runs[i].end))
 		if runs[i].start == start && runs[i].end == end:
 			print("correct run found, deleting")
 			runs.remove_at(i)
@@ -151,7 +153,8 @@ func refresh_runs():
 	
 	data.level_name = $Panel/ScrollContainer/MarginContainer/VBoxContainer/LineEdit.text
 	
-	for i in runs:
+	print(runs.size())
+	for i in range(runs.size() + 1):
 		data.runs.remove_at(0)
 	
 	for i in runs:
